@@ -1,0 +1,58 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="NonCirculatingPivotControl.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:control="clr-namespace:NonCirculatingPivotControl.Controls"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <control:NonCirculatingPivot x:Name="nonCirculatingPivot" Grid.Row="0">
+            <control:NonCirculatingPivotItem HorizontalAlignment="Center" VerticalAlignment="Center" Tag="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Image Source="/Assets/1.png" Grid.Row="0"/>
+                <TextBlock Text="explanation" Grid.Row="1"></TextBlock>
+            </control:NonCirculatingPivotItem>
+            <control:NonCirculatingPivotItem Tag="2">
+                <Image Source="/Assets/2.png"/>
+            </control:NonCirculatingPivotItem>
+            <!--item 3 could not "TapToMove"-->
+            <control:NonCirculatingPivotItem TapToMove="False" Tag="3">
+                <Image Source="/Assets/3.png" />
+            </control:NonCirculatingPivotItem>
+            <control:NonCirculatingPivotItem Tag="4" >
+                <Image Source="/Assets/4.png" />
+            </control:NonCirculatingPivotItem>
+        </control:NonCirculatingPivot>
+        <Grid Grid.Row="1">
+            <Button Content="Selection change by Index" x:Name="btnSelectionChangeByIndex" Click="btnSelectionChangeByIndex_Click" ></Button>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Button Content="Selection change by Item" x:Name="btnSelectionChangeByItem" Click="btnSelectionChangeByItem_Click" ></Button>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Button Content="Chnage item offset" x:Name="btnChangeItemOffset" Click="btnChangeItemOffset_Click" ></Button>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Button Content="Add item programmatically" x:Name="btnAddItemProgrammatically" Click="btnAddItemProgrammatically_Click"></Button>
+        </Grid>
+    </Grid>
+</phone:PhoneApplicationPage>
