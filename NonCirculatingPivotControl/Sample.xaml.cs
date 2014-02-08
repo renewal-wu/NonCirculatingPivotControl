@@ -13,6 +13,7 @@ namespace NonCirculatingPivotControl
         public MainPage()
         {
             InitializeComponent();
+            this.nonCirculatingPivot.SelectionChanged += nonCirculatingPivot_SelectionChanged;
         }
 
         private void nonCirculatingPivot_SelectionChanged(object sender, Controls.NonCirculatingPivotSelectionChangedArgs e)

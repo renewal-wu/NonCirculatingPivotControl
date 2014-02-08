@@ -32,6 +32,9 @@ namespace NonCirculatingPivotControl.Controls
             }
             set
             {
+                if (_SelectedIndex == value)
+                    return;
+
                 _SelectedIndex = value > maxIndex ? maxIndex : value < minIndex ? minIndex : value;
                 if (this.SelectionChanged != null)
                     SelectionChanged(this, new NonCirculatingPivotSelectionChangedArgs() { SelectedIndex = _SelectedIndex, SelectedItem = this.Items[_SelectedIndex] as NonCirculatingPivotItem });
