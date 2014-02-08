@@ -54,8 +54,6 @@ namespace NonCirculatingPivotControl.Controls
                 return;
             if (parent.GetType() != typeof(NonCirculatingPivot))
                 throw new Exception("NonCirculatingPivotItem's parent must be NonCirculatingPivot.");
-
-            ((NonCirculatingPivot)_target.Parent).initItems();
         }
         #endregion
     }

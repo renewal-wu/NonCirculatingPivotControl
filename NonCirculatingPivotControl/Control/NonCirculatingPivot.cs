@@ -21,8 +21,8 @@ namespace NonCirculatingPivotControl.Controls
         protected double minMove = 50;
         private const bool defaultIsOffsetEnable = true;
         private const bool defaultIsNonSequential = true;
-
         private const double defaultAnimationSpeed = 100.0;
+
         private int _SelectedIndex;
         public virtual int SelectedIndex
         {
@@ -217,7 +217,7 @@ namespace NonCirculatingPivotControl.Controls
                 for (int i = 1; i <= itemIndex; i++)
                 {
                     NonCirculatingPivotItem item = (NonCirculatingPivotItem)this.Items[i];
-                    totalMovement += (-screenWidth + item.Offest);
+                    totalMovement += (-screenWidth + (this.IsOffsetEnable ? item.Offest : 0));
                 }
             }
             var fade = new DoubleAnimation()
