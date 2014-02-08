@@ -32,7 +32,7 @@ namespace NonCirculatingPivotControl
 
         private void btnChangeItemOffset_Click(object sender, RoutedEventArgs e)
         {
-            ((NonCirculatingPivotItem)this.nonCirculatingPivot.Items[2]).Offest = 70d;
+            ((NonCirculatingPivotItem)this.nonCirculatingPivot.Items[2]).Offest = 100d;
         }
 
         private void btnAddItemProgrammatically_Click(object sender, RoutedEventArgs e)

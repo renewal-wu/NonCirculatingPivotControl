@@ -128,7 +128,7 @@ namespace NonCirculatingPivotControl.Controls
                     else
                     {
                         NonCirculatingPivotItem previousElement = (NonCirculatingPivotItem)this.Items[i - 1];
-                        targetElement.Margin = new Thickness(screenWidth - previousElement.ActualWidth - (this.IsOffsetEnable ? ((NonCirculatingPivotItem)this.Items[i]).Offest : 0), targetElement.Margin.Top, targetElement.Margin.Right, targetElement.Margin.Bottom);
+                        targetElement.Margin = new Thickness(screenWidth - previousElement.ActualWidth - (this.IsOffsetEnable ? targetElement.Offest : 0), targetElement.Margin.Top, targetElement.Margin.Right, targetElement.Margin.Bottom);
                     }
                     targetElement.Tap -= targetElement_Tap;
 
@@ -201,10 +201,21 @@ namespace NonCirculatingPivotControl.Controls
 
         protected virtual void MoveToItemPosition(int itemIndex)
         {
+            double totalMovement = 0;
+            if (itemIndex == 0)
+                totalMovement = 0;
+            else
+            {
+                for (int i = 1; i <= itemIndex; i++)
+                {
+                    NonCirculatingPivotItem item = (NonCirculatingPivotItem)this.Items[i];
+                    totalMovement += (-screenWidth + item.Offest);
+                }
+            }
             var fade = new DoubleAnimation()
             {
                 From = move.X,
-                To = ((-screenWidth + (this.IsOffsetEnable ? ((NonCirculatingPivotItem)this.Items[itemIndex]).Offest : 0)) * (SelectedIndex)),
+                To = totalMovement,
                 Duration = TimeSpan.FromMilliseconds(AnimationSpeed),
             };
 
