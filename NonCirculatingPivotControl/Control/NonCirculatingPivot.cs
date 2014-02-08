@@ -138,6 +138,11 @@ namespace NonCirculatingPivotControl.Controls
             }
 
             maxIndex = this.Items.Count - 1;
+
+            if (SelectedIndex > maxIndex)
+                SelectedIndex = maxIndex;
+            else if (SelectedIndex < minIndex)
+                SelectedIndex = minIndex;
         }
 
         protected virtual void targetElement_Tap(object sender, GestureEventArgs e)
