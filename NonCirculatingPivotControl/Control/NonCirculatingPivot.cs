@@ -61,13 +61,13 @@ namespace NonCirculatingPivotControl.Controls
         public NonCirculatingPivot()
         {
             Transforms.Children.Add(move);
-            this.ManipulationStarted += new EventHandler<ManipulationStartedEventArgs>(NonSequentialPivot_ManipulationStarted);
-            this.ManipulationDelta += new EventHandler<ManipulationDeltaEventArgs>(NonSequentialPivot_ManipulationDelta);
-            this.ManipulationCompleted += new EventHandler<ManipulationCompletedEventArgs>(NonSequentialPivot_ManipulationCompleted);
+            this.ManipulationStarted += new EventHandler<ManipulationStartedEventArgs>(NonCirculatingPivot_ManipulationStarted);
+            this.ManipulationDelta += new EventHandler<ManipulationDeltaEventArgs>(NonCirculatingPivot_ManipulationDelta);
+            this.ManipulationCompleted += new EventHandler<ManipulationCompletedEventArgs>(NonCirculatingPivot_ManipulationCompleted);
             this.Items = this.Children;
             this.Orientation = Orientation.Horizontal;
-            this.Loaded += NonSequentialPivot_Loaded;
-            this.LayoutUpdated += NonSequentialPivot_LayoutUpdated;
+            this.Loaded += NonCirculatingPivot_Loaded;
+            this.LayoutUpdated += NonCirculatingPivot_LayoutUpdated;
         }
 
         #region IsOffsetEnable relate
@@ -100,13 +100,13 @@ namespace NonCirculatingPivotControl.Controls
         #endregion
 
 
-        protected void NonSequentialPivot_Loaded(object sender, RoutedEventArgs e)
+        protected void NonCirculatingPivot_Loaded(object sender, RoutedEventArgs e)
         {
             initItems();
             SelectedIndex = 0;
         }
 
-        public void NonSequentialPivot_LayoutUpdated(object sender, EventArgs e)
+        public void NonCirculatingPivot_LayoutUpdated(object sender, EventArgs e)
         {
             initItems();
         }
@@ -118,7 +118,7 @@ namespace NonCirculatingPivotControl.Controls
                 for (int i = 0; i < this.Items.Count; i++)
                 {
                     if (this.Items[i].GetType() != typeof(NonCirculatingPivotItem))
-                        throw new ArgumentException("The NonSequentialPivot's child must be NonSequentialPivotItem.");
+                        throw new ArgumentException("The NonCirculatingPivot's child must be NonCirculatingPivotItem.");
                     NonCirculatingPivotItem targetElement = (NonCirculatingPivotItem)this.Items[i];
                     targetElement.RenderTransform = Transforms;
                     if (i == 0)
@@ -146,12 +146,12 @@ namespace NonCirculatingPivotControl.Controls
             MoveToItemPosition(SelectedIndex);
         }
 
-        protected virtual void NonSequentialPivot_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        protected virtual void NonCirculatingPivot_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
         {
 
         }
 
-        protected virtual void NonSequentialPivot_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        protected virtual void NonCirculatingPivot_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
         {
             move.X += e.DeltaManipulation.Translation.X;
 
@@ -163,7 +163,7 @@ namespace NonCirculatingPivotControl.Controls
             Debug.WriteLine("Direction: " + (isTurnRight ? "Right" : "Left"));
         }
 
-        protected virtual void NonSequentialPivot_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        protected virtual void NonCirculatingPivot_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
             if (Math.Abs(e.TotalManipulation.Translation.X) > minMove)
                 isNeedMove = true;

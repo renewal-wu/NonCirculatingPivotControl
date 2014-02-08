@@ -30,7 +30,7 @@ namespace NonCirculatingPivotControl.Controls
             if (parent == null)
                 return;
             if (parent.GetType() != typeof(NonCirculatingPivot))
-                throw new Exception("NonSequentialPivotItem's parent must be NonSequentialPivot.");
+                throw new Exception("NonCirculatingPivotItem's parent must be NonCirculatingPivot.");
 
             ((NonCirculatingPivot)_target.Parent).initItems();
         }
@@ -53,7 +53,7 @@ namespace NonCirculatingPivotControl.Controls
             if (parent == null)
                 return;
             if (parent.GetType() != typeof(NonCirculatingPivot))
-                throw new Exception("NonSequentialPivotItem's parent must be NonSequentialPivot.");
+                throw new Exception("NonCirculatingPivotItem's parent must be NonCirculatingPivot.");
 
             ((NonCirculatingPivot)_target.Parent).initItems();
         }
