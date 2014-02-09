@@ -17,12 +17,7 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <control:NonCirculatingPivot x:Name="nonCirculatingPivot" Grid.Row="0" Orientation="Horizontal">
             <control:NonCirculatingPivotItem HorizontalAlignment="Center" VerticalAlignment="Center" Tag="1">
@@ -44,23 +39,39 @@
                 <Image Source="/Assets/4.png" />
             </control:NonCirculatingPivotItem>
         </control:NonCirculatingPivot>
-        <Grid Grid.Row="1">
-            <Button Content="Selection change by Index" x:Name="btnSelectionChangeByIndex" Click="btnSelectionChangeByIndex_Click" ></Button>
-        </Grid>
-        <Grid Grid.Row="2">
-            <Button Content="Selection change by Item" x:Name="btnSelectionChangeByItem" Click="btnSelectionChangeByItem_Click" ></Button>
-        </Grid>
-        <Grid Grid.Row="3">
-            <Button Content="Chnage item offset" x:Name="btnChangeItemOffset" Click="btnChangeItemOffset_Click" ></Button>
-        </Grid>
-        <Grid Grid.Row="4">
-            <Button Content="Add item programmatically" x:Name="btnAddItemProgrammatically" Click="btnAddItemProgrammatically_Click"></Button>
-        </Grid>
-        <Grid Grid.Row="5">
-            <Button Content="Change orientation" x:Name="btnChangeOrientation" Click="btnChangeOrientation_Click"></Button>
-        </Grid>
-        <Grid Grid.Row="6">
-            <Button Content="Change Offset Type" x:Name="btnChangeOffsetType" Click="btnChangeOffsetType_Click" ></Button>
-        </Grid>
+        <ScrollViewer Grid.Row="1">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Button Content="Selection change by Index" x:Name="btnSelectionChangeByIndex" Click="btnSelectionChangeByIndex_Click" ></Button>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Button Content="Selection change by Item" x:Name="btnSelectionChangeByItem" Click="btnSelectionChangeByItem_Click" ></Button>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Button Content="Chnage item offset" x:Name="btnChangeItemOffset" Click="btnChangeItemOffset_Click" ></Button>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Button Content="Chnage item movement" x:Name="btnChangeItemMovement" Click="btnChangeItemMovement_Click"></Button>
+                </Grid>
+                <Grid Grid.Row="4">
+                    <Button Content="Add item programmatically" x:Name="btnAddItemProgrammatically" Click="btnAddItemProgrammatically_Click"></Button>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <Button Content="Change orientation" x:Name="btnChangeOrientation" Click="btnChangeOrientation_Click"></Button>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <Button Content="Change Offset Type" x:Name="btnChangeOffsetType" Click="btnChangeOffsetType_Click" ></Button>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </phone:PhoneApplicationPage>

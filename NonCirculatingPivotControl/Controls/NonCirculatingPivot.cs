@@ -24,7 +24,7 @@ namespace NonCirculatingPivotControl.Controls
         private const bool defaultIsNonSequential = true;
         private const bool defaultIsOnlyForward = false;
         private const double defaultAnimationSpeed = 100.0;
-        private Orientation _Orientation;
+        private const Orientation defaultOrientation = Orientation.Vertical;
 
         private int _SelectedIndex;
         public virtual int SelectedIndex
@@ -78,7 +78,6 @@ namespace NonCirculatingPivotControl.Controls
             this.ManipulationDelta += new EventHandler<ManipulationDeltaEventArgs>(NonCirculatingPivot_ManipulationDelta);
             this.ManipulationCompleted += new EventHandler<ManipulationCompletedEventArgs>(NonCirculatingPivot_ManipulationCompleted);
             this.Items = this.Children;
-            this._Orientation = this.Orientation;
             this.Loaded += NonCirculatingPivot_Loaded;
             this.LayoutUpdated += NonCirculatingPivot_LayoutUpdated;
         }
@@ -122,6 +121,26 @@ namespace NonCirculatingPivotControl.Controls
             DependencyProperty.Register("IsOnlyForward", typeof(bool), typeof(NonCirculatingPivot), new PropertyMetadata(defaultIsOnlyForward));
         #endregion
 
+        #region Orientation relate
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
+
+        public new static readonly DependencyProperty OrientationProperty =
+            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(StackPanel), new PropertyMetadata(defaultOrientation, OnOrientationChanged));
+
+        private static void OnOrientationChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            ((StackPanel)obj).Orientation = (Orientation)e.NewValue;
+            NonCirculatingPivot _target = (NonCirculatingPivot)obj;
+            if (_target.OrientationChanged != null)
+                _target.OrientationChanged(_target, new NonCirculatingPivotOrientationChangedArgs() { newOrientation = _target.Orientation });
+            _target.initItems();
+        }
+        #endregion
+
         protected void NonCirculatingPivot_Loaded(object sender, RoutedEventArgs e)
         {
             SelectedIndex = 0;
@@ -131,12 +150,6 @@ namespace NonCirculatingPivotControl.Controls
         public void NonCirculatingPivot_LayoutUpdated(object sender, EventArgs e)
         {
             initItems();
-            if (this._Orientation != this.Orientation)
-            {
-                this._Orientation = this.Orientation;
-                if (OrientationChanged != null)
-                    OrientationChanged(this, new NonCirculatingPivotOrientationChangedArgs() { newOrientation = this.Orientation });
-            }
         }
 
         internal void initItems()

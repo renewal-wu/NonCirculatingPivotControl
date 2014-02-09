@@ -36,6 +36,11 @@ namespace NonCirculatingPivotControl
             ((NonCirculatingPivotItem)this.nonCirculatingPivot.Items[2]).Offest = 100d;
         }
 
+        private void btnChangeItemMovement_Click(object sender, RoutedEventArgs e)
+        {
+            ((NonCirculatingPivotItem)this.nonCirculatingPivot.Items[2]).Movement = 100d;
+        }
+
         private void btnAddItemProgrammatically_Click(object sender, RoutedEventArgs e)
         {
             NonCirculatingPivotItem newItem = new NonCirculatingPivotItem();
@@ -64,5 +69,7 @@ namespace NonCirculatingPivotControl
             }
             Debug.WriteLine("this.nonCirculatingPivot.OffsetType is " + this.nonCirculatingPivot.OffsetType.ToString());
         }
+
+
     }
 }
