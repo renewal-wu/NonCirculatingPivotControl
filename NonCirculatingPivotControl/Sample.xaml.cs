@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Controls;
-using NonCirculatingPivotControl.Control;
 using NonCirculatingPivotControl.Controls;
 
 namespace NonCirculatingPivotControl

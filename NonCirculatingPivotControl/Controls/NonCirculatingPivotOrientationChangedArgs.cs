@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace NonCirculatingPivotControl.Control
+namespace NonCirculatingPivotControl.Controls
 {
     public class NonCirculatingPivotOrientationChangedArgs
     {

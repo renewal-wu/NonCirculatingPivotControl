@@ -93,11 +93,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Control\NonCirculatingPivot.cs" />
-    <Compile Include="Control\NonCirculatingPivotItem.cs" />
-    <Compile Include="Control\NonCirculatingPivotOffsetType.cs" />
-    <Compile Include="Control\NonCirculatingPivotOrientationChangedArgs.cs" />
-    <Compile Include="Control\NonCirculatingPivotSelectionChangedArgs.cs" />
+    <Compile Include="Controls\NonCirculatingPivot.cs" />
+    <Compile Include="Controls\NonCirculatingPivotItem.cs" />
+    <Compile Include="Controls\NonCirculatingPivotOffsetType.cs" />
+    <Compile Include="Controls\NonCirculatingPivotOrientationChangedArgs.cs" />
+    <Compile Include="Controls\NonCirculatingPivotSelectionChangedArgs.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Sample.xaml.cs">
       <DependentUpon>Sample.xaml</DependentUpon>
