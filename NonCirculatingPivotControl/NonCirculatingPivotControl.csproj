@@ -95,6 +95,7 @@
     </Compile>
     <Compile Include="Control\NonCirculatingPivot.cs" />
     <Compile Include="Control\NonCirculatingPivotItem.cs" />
+    <Compile Include="Control\NonCirculatingPivotOrientationChangedArgs.cs" />
     <Compile Include="Control\NonCirculatingPivotSelectionChangedArgs.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Sample.xaml.cs">

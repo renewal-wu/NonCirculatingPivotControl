@@ -21,8 +21,9 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <control:NonCirculatingPivot x:Name="nonCirculatingPivot" Grid.Row="0">
+        <control:NonCirculatingPivot x:Name="nonCirculatingPivot" Grid.Row="0" Orientation="Horizontal">
             <control:NonCirculatingPivotItem HorizontalAlignment="Center" VerticalAlignment="Center" Tag="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
@@ -53,6 +54,9 @@
         </Grid>
         <Grid Grid.Row="4">
             <Button Content="Add item programmatically" x:Name="btnAddItemProgrammatically" Click="btnAddItemProgrammatically_Click"></Button>
+        </Grid>
+        <Grid Grid.Row="5">
+            <Button Content="Change orientation" x:Name="btnChangeOrientation" Click="btnChangeOrientation_Click"></Button>
         </Grid>
     </Grid>
 </phone:PhoneApplicationPage>

@@ -42,5 +42,10 @@ namespace NonCirculatingPivotControl
             newItem.Children.Add(new Image() { Source = new BitmapImage(new Uri("Assets/new.png", UriKind.Relative)) });
             this.nonCirculatingPivot.Children.Add(newItem);
         }
+
+        private void btnChangeOrientation_Click(object sender, RoutedEventArgs e)
+        {
+            this.nonCirculatingPivot.Orientation = System.Windows.Controls.Orientation.Vertical;
+        }
     }
 }
