@@ -21,7 +21,7 @@ namespace NonCirculatingPivotControl.Controls
         protected int minIndex = 0;
         protected int maxIndex = 3;
         protected double minMove = 50;
-        private const bool defaultIsOffsetEnable = true;
+        private const NonCirculatingPivotOffsetType defaultOffsetType = NonCirculatingPivotOffsetType.Stick;
         private const bool defaultIsNonSequential = true;
         private const bool defaultIsOnlyForward = false;
         private const double defaultAnimationSpeed = 100.0;
@@ -84,17 +84,17 @@ namespace NonCirculatingPivotControl.Controls
             this.LayoutUpdated += NonCirculatingPivot_LayoutUpdated;
         }
 
-        #region IsOffsetEnable relate
-        public bool IsOffsetEnable
+        #region OffsetType relate
+        public NonCirculatingPivotOffsetType OffsetType
         {
-            get { return (bool)GetValue(IsOffsetEnableProperty); }
-            set { SetValue(IsOffsetEnableProperty, value); }
+            get { return (NonCirculatingPivotOffsetType)GetValue(OffsetTypeProperty); }
+            set { SetValue(OffsetTypeProperty, value); }
         }
 
-        public static readonly DependencyProperty IsOffsetEnableProperty =
-            DependencyProperty.Register("IsOffsetEnable", typeof(bool), typeof(NonCirculatingPivot), new PropertyMetadata(defaultIsOffsetEnable, OnIsOffsetEnableChanged));
+        public static readonly DependencyProperty OffsetTypeProperty =
+            DependencyProperty.Register("OffsetType", typeof(NonCirculatingPivotOffsetType), typeof(NonCirculatingPivot), new PropertyMetadata(defaultOffsetType, OnOffsetTypeChanged));
 
-        private static void OnIsOffsetEnableChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        private static void OnOffsetTypeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             NonCirculatingPivot _target = (NonCirculatingPivot)obj;
             _target.initItems();
@@ -125,8 +125,8 @@ namespace NonCirculatingPivotControl.Controls
 
         protected void NonCirculatingPivot_Loaded(object sender, RoutedEventArgs e)
         {
-            initItems();
             SelectedIndex = 0;
+            initItems();
         }
 
         public void NonCirculatingPivot_LayoutUpdated(object sender, EventArgs e)
@@ -137,7 +137,6 @@ namespace NonCirculatingPivotControl.Controls
                 this._Orientation = this.Orientation;
                 if (OrientationChanged != null)
                     OrientationChanged(this, new NonCirculatingPivotOrientationChangedArgs() { newOrientation = this.Orientation });
-                MoveToItemPosition(SelectedIndex);
             }
         }
 
@@ -166,23 +165,49 @@ namespace NonCirculatingPivotControl.Controls
                         case Orientation.Horizontal:
                             if (i == 0)
                             {
-                                targetElement.Margin = new Thickness(0, 0, targetElement.Margin.Right, targetElement.Margin.Bottom);
+                                targetElement.Margin = new Thickness(targetElement.Movement, 0, targetElement.Margin.Right, targetElement.Margin.Bottom);
                             }
                             else
                             {
                                 NonCirculatingPivotItem previousElement = (NonCirculatingPivotItem)this.Items[i - 1];
-                                targetElement.Margin = new Thickness(screenWidth - previousElement.ActualWidth - (this.IsOffsetEnable ? targetElement.Offest : 0), 0, targetElement.Margin.Right, targetElement.Margin.Bottom);
+                                double leftMargin = 0;
+                                switch (this.OffsetType)
+                                {
+                                    case NonCirculatingPivotOffsetType.Normal:
+                                        leftMargin = screenWidth - previousElement.ActualWidth - targetElement.Offest - previousElement.Movement;
+                                        break;
+                                    case NonCirculatingPivotOffsetType.None:
+                                        leftMargin = screenWidth - previousElement.ActualWidth - previousElement.Movement;
+                                        break;
+                                    case NonCirculatingPivotOffsetType.Stick:
+                                        leftMargin = previousElement.Movement;
+                                        break;
+                                }
+                                targetElement.Margin = new Thickness(leftMargin, 0, targetElement.Margin.Right, targetElement.Margin.Bottom);
                             }
                             break;
                         case Orientation.Vertical:
                             if (i == 0)
                             {
-                                targetElement.Margin = new Thickness(0, 0, targetElement.Margin.Right, targetElement.Margin.Bottom);
+                                targetElement.Margin = new Thickness(0, targetElement.Movement, targetElement.Margin.Right, targetElement.Margin.Bottom);
                             }
                             else
                             {
                                 NonCirculatingPivotItem previousElement = (NonCirculatingPivotItem)this.Items[i - 1];
-                                targetElement.Margin = new Thickness(0, screenHeight - previousElement.ActualHeight - (this.IsOffsetEnable ? targetElement.Offest : 0), targetElement.Margin.Right, targetElement.Margin.Bottom);
+                                double topMargin = 0;
+                                switch (this.OffsetType)
+                                {
+                                    case NonCirculatingPivotOffsetType.Normal:
+                                        topMargin = screenHeight - previousElement.ActualHeight - targetElement.Offest - previousElement.Movement;
+                                        break;
+                                    case NonCirculatingPivotOffsetType.None:
+                                        topMargin = screenHeight - previousElement.ActualHeight - previousElement.Movement;
+                                        break;
+                                    case NonCirculatingPivotOffsetType.Stick:
+                                        topMargin = previousElement.Movement;
+                                        break;
+                                }
+                                targetElement.Margin = new Thickness(0, topMargin, targetElement.Margin.Right, targetElement.Margin.Bottom);
                             }
                             break;
                     }
@@ -199,6 +224,8 @@ namespace NonCirculatingPivotControl.Controls
                 SelectedIndex = maxIndex;
             else if (SelectedIndex < minIndex)
                 SelectedIndex = minIndex;
+            else
+                MoveToItemPosition(SelectedIndex);
         }
 
         protected virtual void targetElement_Tap(object sender, GestureEventArgs e)
@@ -280,7 +307,19 @@ namespace NonCirculatingPivotControl.Controls
                 for (int i = 1; i <= itemIndex; i++)
                 {
                     NonCirculatingPivotItem item = (NonCirculatingPivotItem)this.Items[i];
-                    totalMovement += ((this.Orientation == Orientation.Horizontal ? (-screenWidth) : (-screenHeight)) + (this.IsOffsetEnable ? item.Offest : 0));
+
+                    switch (this.OffsetType)
+                    {
+                        case NonCirculatingPivotOffsetType.Normal:
+                            totalMovement += ((this.Orientation == Orientation.Horizontal ? (-screenWidth) : (-screenHeight)) + item.Offest + item.Movement);
+                            break;
+                        case NonCirculatingPivotOffsetType.None:
+                            totalMovement += ((this.Orientation == Orientation.Horizontal ? (-screenWidth) : (-screenHeight)) + item.Movement);
+                            break;
+                        case NonCirculatingPivotOffsetType.Stick:
+                            totalMovement += (this.Orientation == Orientation.Horizontal ? -item.ActualWidth : -item.ActualHeight) - item.Movement;
+                            break;
+                    }
                 }
             }
             var fade = new DoubleAnimation()

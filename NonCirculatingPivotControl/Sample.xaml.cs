@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Controls;
+using NonCirculatingPivotControl.Control;
 using NonCirculatingPivotControl.Controls;
 
 namespace NonCirculatingPivotControl
@@ -46,6 +47,23 @@ namespace NonCirculatingPivotControl
         private void btnChangeOrientation_Click(object sender, RoutedEventArgs e)
         {
             this.nonCirculatingPivot.Orientation = System.Windows.Controls.Orientation.Vertical;
+        }
+
+        private void btnChangeOffsetType_Click(object sender, RoutedEventArgs e)
+        {
+            switch (this.nonCirculatingPivot.OffsetType)
+            {
+                case NonCirculatingPivotOffsetType.None:
+                    this.nonCirculatingPivot.OffsetType = NonCirculatingPivotOffsetType.Normal;
+                    break;
+                case NonCirculatingPivotOffsetType.Normal:
+                    this.nonCirculatingPivot.OffsetType = NonCirculatingPivotOffsetType.Stick;
+                    break;
+                case NonCirculatingPivotOffsetType.Stick:
+                    this.nonCirculatingPivot.OffsetType = NonCirculatingPivotOffsetType.None;
+                    break;
+            }
+            Debug.WriteLine("this.nonCirculatingPivot.OffsetType is " + this.nonCirculatingPivot.OffsetType.ToString());
         }
     }
 }

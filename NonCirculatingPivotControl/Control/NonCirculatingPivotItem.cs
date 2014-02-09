@@ -7,6 +7,7 @@ namespace NonCirculatingPivotControl.Controls
     public class NonCirculatingPivotItem : Grid
     {
         private const double defaultOffset = 50.0;
+        private const double defaultMovement = 30.0;
 
         public NonCirculatingPivotItem()
         {
@@ -47,6 +48,27 @@ namespace NonCirculatingPivotControl.Controls
             DependencyProperty.Register("Offest", typeof(double), typeof(NonCirculatingPivotItem), new PropertyMetadata(defaultOffset, OnOffestChanged));
 
         private static void OnOffestChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            NonCirculatingPivotItem _target = (NonCirculatingPivotItem)obj;
+            NonCirculatingPivot parent = (NonCirculatingPivot)_target.Parent;
+            if (parent == null)
+                return;
+            if (parent.GetType() != typeof(NonCirculatingPivot))
+                throw new Exception("NonCirculatingPivotItem's parent must be NonCirculatingPivot.");
+        }
+        #endregion
+
+        #region Movement
+        public double Movement
+        {
+            get { return (double)GetValue(MovementProperty); }
+            set { SetValue(MovementProperty, value); }
+        }
+
+        public static readonly DependencyProperty MovementProperty =
+            DependencyProperty.Register("Movement", typeof(double), typeof(NonCirculatingPivotItem), new PropertyMetadata(defaultMovement, OnMovementChanged));
+
+        private static void OnMovementChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             NonCirculatingPivotItem _target = (NonCirculatingPivotItem)obj;
             NonCirculatingPivot parent = (NonCirculatingPivot)_target.Parent;
