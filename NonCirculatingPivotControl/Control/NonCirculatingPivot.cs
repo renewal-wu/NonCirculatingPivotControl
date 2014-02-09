@@ -23,6 +23,7 @@ namespace NonCirculatingPivotControl.Controls
         protected double minMove = 50;
         private const bool defaultIsOffsetEnable = true;
         private const bool defaultIsNonSequential = true;
+        private const bool defaultIsOnlyForward = false;
         private const double defaultAnimationSpeed = 100.0;
         private Orientation _Orientation;
 
@@ -37,10 +38,12 @@ namespace NonCirculatingPivotControl.Controls
             {
                 if (_SelectedIndex == value)
                     return;
-
-                _SelectedIndex = value > maxIndex ? maxIndex : value < minIndex ? minIndex : value;
-                if (this.SelectionChanged != null)
-                    SelectionChanged(this, new NonCirculatingPivotSelectionChangedArgs() { SelectedIndex = _SelectedIndex, SelectedItem = this.Items[_SelectedIndex] as NonCirculatingPivotItem });
+                else if (!(IsOnlyForward && value < _SelectedIndex))
+                {
+                    _SelectedIndex = value > maxIndex ? maxIndex : value < minIndex ? minIndex : value;
+                    if (this.SelectionChanged != null)
+                        SelectionChanged(this, new NonCirculatingPivotSelectionChangedArgs() { SelectedIndex = _SelectedIndex, SelectedItem = this.Items[_SelectedIndex] as NonCirculatingPivotItem });
+                }
                 this.MoveToItemPosition(_SelectedIndex);
             }
         }
@@ -107,9 +110,18 @@ namespace NonCirculatingPivotControl.Controls
 
         public static readonly DependencyProperty AnimationSpeedProperty =
             DependencyProperty.Register("AnimationSpeed", typeof(double), typeof(NonCirculatingPivot), new PropertyMetadata(defaultAnimationSpeed));
-
         #endregion
 
+        #region IsOnlyForward relate
+        public bool IsOnlyForward
+        {
+            get { return (bool)GetValue(IsOnlyForwardProperty); }
+            set { SetValue(IsOnlyForwardProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsOnlyForwardProperty =
+            DependencyProperty.Register("IsOnlyForward", typeof(bool), typeof(NonCirculatingPivot), new PropertyMetadata(defaultIsOnlyForward));
+        #endregion
 
         protected void NonCirculatingPivot_Loaded(object sender, RoutedEventArgs e)
         {
