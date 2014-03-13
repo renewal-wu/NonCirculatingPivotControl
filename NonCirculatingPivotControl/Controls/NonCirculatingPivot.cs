@@ -256,21 +256,25 @@ namespace NonCirculatingPivotControl.Controls
             switch (this.Orientation)
             {
                 case Orientation.Horizontal:
+                    if (e.DeltaManipulation.Translation.X == 0)
+                        return;
                     move.X += e.DeltaManipulation.Translation.X;
-                    if (e.DeltaManipulation.Translation.X >= 0)
+                    if (e.DeltaManipulation.Translation.X > 0)
                         isTurnBack = true;
                     else
                         isTurnBack = false;
                     break;
                 case Orientation.Vertical:
+                    if (e.DeltaManipulation.Translation.Y == 0)
+                        return;
                     move.Y += e.DeltaManipulation.Translation.Y;
-                    if (e.DeltaManipulation.Translation.Y >= 0)
+                    if (e.DeltaManipulation.Translation.Y > 0)
                         isTurnBack = true;
                     else
                         isTurnBack = false;
                     break;
             }
-            Debug.WriteLine("Direction: " + (isTurnBack ? "Back" : "Forward"));
+            //Debug.WriteLine("Direction: " + (isTurnBack ? "Back" : "Forward"));
         }
 
         protected virtual void NonCirculatingPivot_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
@@ -334,16 +338,19 @@ namespace NonCirculatingPivotControl.Controls
                     }
                 }
             }
-            var fade = new DoubleAnimation()
+
+            DoubleAnimation fade = new DoubleAnimation()
             {
                 From = this.Orientation == Orientation.Horizontal ? move.X : move.Y,
                 To = totalMovement,
-                Duration = TimeSpan.FromMilliseconds(AnimationSpeed),
+                EasingFunction = (itemIndex == 0 || itemIndex == this.Items.Count - 1) ? new BackEase() { EasingMode = EasingMode.EaseOut } as IEasingFunction : new CircleEase() { EasingMode = EasingMode.EaseOut } as IEasingFunction,
+                Duration = (itemIndex == 0 || itemIndex == this.Items.Count - 1) ? TimeSpan.FromMilliseconds(AnimationSpeed * 3) : TimeSpan.FromMilliseconds(AnimationSpeed * 3)
             };
+
             Storyboard.SetTarget(fade, move);
             Storyboard.SetTargetProperty(fade, new PropertyPath(this.Orientation == Orientation.Horizontal ? TranslateTransform.XProperty : TranslateTransform.YProperty));
 
-            var sb = new Storyboard();
+            Storyboard sb = new Storyboard();
             sb.Children.Add(fade);
 
             sb.Begin();
